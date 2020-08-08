@@ -1,1 +1,93 @@
 /* import style sheet from our todo list activity to start */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: aqua;
+  font-family: "Concert One";
+  font-size: 16px;
+}
+
+#card-text {
+    font-size: 150%;
+}
+
+.jumbotron {
+background-color: #5ef4ff;
+}
+
+.container {
+    background-color: aqua;
+}
+
+#btn-start {
+    background-color: red;
+}
+
+.countdown {
+    /* align it in top right corner */
+    text-align: center;
+    font-size: 400%;
+}
+/* not doing anything at the moment */
+
+input {
+  height: 50px;
+  width: 100%;
+  padding: 6px;
+  margin-top: 10px;
+  font-size: 2.4em;
+  border: none;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  background-color: white;
+}
+
+li {
+  height: 50px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+  background-color: #ff5d88;
+  color: white;
+  font-size: 1.5em;
+  line-height: 1.5;
+}
+
+li:before {
+  content: "\200B";
+  position: absolute;
+}
+
+li::after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+
+li button {
+  float: right;
+  border: none;
+  height: 40px;
+  cursor: pointer;
+  background-color: #ff9500;
+  color: white;
+  font-size: 1em;
+}
+
+li button:hover {
+  background-color: #febc5d;
+}
+
+.todos {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
