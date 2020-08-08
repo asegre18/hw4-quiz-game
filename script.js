@@ -4,6 +4,9 @@ $(document).ready(function () {
     const totalQuestions = 10;
     let timer = 60;
     const $container = $(".container");
+    const $card1 = $(".card1");
+    const $card2 = $(".card2");
+    let questionIndex = 0;
     // trying to add animation over the start button to switch colors every second
     // setInterval(function() {
     //     let btnStart = $('.btn-start');
@@ -20,111 +23,61 @@ $(document).ready(function () {
         {
             // question1
             question: "Who invented JavaScript?",
-            answers: {
-                a: "Mark Zuckerberg",
-                b: "Jesse Eisenberg",
-                c: "Manny",
-                d: "Brendan Eich"
-            },
+            answers: { a: "Mark Zuckerberg", b: "Jesse Eisenberg", c: "Manny", d: "Brendan Eich" },
             correctAnswer: "d"
         },
         // question2
         {
             question: "Who was the NFL MVP in 2019?",
-            answers: {
-                a: "Patrick Mahomes",
-                b: "Christian McCaffrey",
-                c: "Lamar Jackson",
-                d: "Russell Wilson"
-            },
+            answers: { a: "Patrick Mahomes", b: "Christian McCaffrey", c: "Lamar Jackson", d: "Russell Wilson" },
             correctAnswer: "c"
         },
         // question3
         {
             question: "Who is the lead singer for Phish?",
-            answers: {
-                a: "Freddie Mercury",
-                b: "Trey Anastasio",
-                c: "John Mayer",
-                d: "David Bowie"
-            },
+            answers: { a: "Freddie Mercury", b: "Trey Anastasio", c: "John Mayer", d: "David Bowie" },
             correctAnswer: "b"
         },
         // question4
         {
             question: "How many weeks in a year?",
-            answers: {
-                a: "60",
-                b: "365",
-                c: "50",
-                d: "52"
-            },
+            answers: { a: "60", b: "365", c: "50", d: "52" },
             correctAnswer: "d"
         },
         // question5
         {
             question: "Whats the fastest way to get from point A to point B?",
-            answers: {
-                a: "Uber",
-                b: "Lyft",
-                c: "A straight Line",
-                d: "Airplane"
-            },
+            answers: { a: "Uber", b: "Lyft", c: "A straight Line", d: "Airplane" },
             correctAnswer: "c"
         },
         // question6
         {
             question: "Who is the fastest sprinter alive?",
-            answers: {
-                a: "Manny",
-                b: "Chris Johnson",
-                c: "Michael Jordan",
-                d: "Usain Bolt"
-            },
+            answers: { a: "Manny", b: "Chris Johnson", c: "Michael Jordan", d: "Usain Bolt" },
             correctAnswer: "d"
         },
         // question7
         {
             question: "What is the biggest food chain in the world?",
-            answers: {
-                a: "Subway",
-                b: "Taco Bell",
-                c: "McDonalds",
-                d: "KFC"
-            },
+            answers: { a: "Subway", b: "Taco Bell", c: "McDonalds", d: "KFC" },
             correctAnswer: "a"
         },
         // question8
         {
             question: "Who let the dogs out?",
-            answers: {
-                a: "Airbud",
-                b: "Baha Men",
-                c: "Michael Vick",
-                d: "Yeller's Owner"
-            },
+            answers: { a: "Airbud", b: "Baha Men", c: "Michael Vick", d: "Yeller's Owner" },
             correctAnswer: "b"
         },
         // question9
         {
             question: "Who holds the record for the most points scored in a single NBA game?",
-            answers: {
-                a: "Michael Jordan",
-                b: "Lebron James",
-                c: "Kobe Bryant",
-                d: "Wilt Chamberlain"
-            },
+            answers: { a: "Michael Jordan", b: "Lebron James", c: "Kobe Bryant", d: "Wilt Chamberlain" },
             correctAnswer: "d"
         },
         // question10
         {
             question: "How many points did he score in that game?",
-            answers: {
-                a: "100",
-                b: "81",
-                c: "103",
-                d: "94"
-            },
+            answers: { a: "100", b: "81", c: "103", d: "94" },
             correctAnswer: "a"
         },
     ];
@@ -136,38 +89,70 @@ $(document).ready(function () {
     $("#btn-start").click(function () {
         console.log("clicked");
         // event.preventDefault();
-        buildQuiz();
+        // buildQuiz();
+        displayQuestion();
+        displayChoices();
         countDown();
-        // quizGrade();
-
+        quizGrade();
     });
     // start of quiz builder function
-    function buildQuiz() {
-        const output = [];
-        hideRules();
-        const quizContainer = $container;
-        questions.forEach(
-            (currentQuestion, questionNumber) => {
-                const answers = [];
-                for (letter in currentQuestion.answer) {
-                    answers.push(
-                        `<label>
-                            <input type="button" name="question${questionNumber}" value="${letter}">
-                            ${letter} :
-                            ${currentQuestion.answer[letter]}
-                    <\label>`
-                    );
-                }
-                output.push(
-                    `<div class="slide">
-                      <div class="question"> ${currentQuestion.question} </div>
-                      <div class="answers"> ${answers.join("")} </div>
-                    </div>`
-                );
-            }
-        );
-        quizContainer.innerHTML = output.join('');
-    };
+    // function buildQuiz() { 
+    //     const output = [];
+    //     const quizContainer = $card1;
+    //     //  no forLoop here
+    //     // get 1 question on screen
+    //     questions.forEach(
+    //         (currentQuestion, questionNumber) => {
+    //             const answers = [];
+    //             for (letter in currentQuestion.answer) {
+    //                 answers.push(
+    //                     `<label>
+    //                         <input type="p" name="question${questionNumber}" value="${letter}">
+    //                         ${letter} :
+    //                         ${currentQuestion.answer[letter]}
+    //                 <\label>`
+    //                 );
+    //             }
+    //             output.push(
+    //                 `<div class="button">
+    //                   <div class="question"> ${currentQuestion.question} </div>
+    //                   <div class="answers"> ${answers.join("")} </div>
+    //                 </div>`
+    //             );
+    //         }
+    //     );
+    //     quizContainer.innerHTML = output.join('');
+    // };
+
+    // function to display question 1
+    // function to move to the next question with an click function 
+    function displayQuestion() {
+        $card1.text("");
+        for (let i = 0; i < questions.length; i++) {
+            let currentQuestion = questions[i];
+            $card1.text(currentQuestion.value);
+            $card1.append(questions[i]);
+            console.log($(currentQuestion[i]).val());
+        }
+
+    }
+    // plops answers into card2
+    function displayChoices() {
+        $card2.text("");
+        for (let i = 0; i < questions.length; i++) {
+            let currentChoices = questions[i];
+            $card2.text(currentChoices.value);
+            $card2.append(questions[i]);
+            console.log($(currentChoices[i]).val());
+        }
+
+    }
+    // dynamically checks if the user chose the correct answer and add it to the score value
+    // if the user is wrong, call the subtractFive() function
+    function correctAnswer() {
+
+    }
+
     // countdown function for the quiz timer
     // ALTER SO IF A QUESTION IS WRONG, MORE TIME IS SUBTRACTED
     function countDown() {
@@ -187,15 +172,6 @@ $(document).ready(function () {
     // function to subtract 5 second when a question is wrong
     function subtractFive() {
         timer = timer - 5;
-    }
-
-    function hideRules() {
-        let x = $("#container");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
     }
 
     // create an object with each multiple choice question and answer
