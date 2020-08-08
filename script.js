@@ -99,27 +99,53 @@ $(document).ready(function () {
     // function to move to the next question with an click function 
     function displayQuestion() {
         $card1.text("");
-            let currentQuestion = questions[userQuestionIndex];
-            $card1.text(currentQuestion.question);
-            let temp = Object.keys(currentQuestion.answers);
-            $card2.text("");
-            for (let i = 0; i < temp.length; i++) {
-                console.log($card2);
-                let li = document.createElement("li");
-                let btn = document.createElement("button");
-                btn.textContent = currentQuestion.answers[temp[i]];
-                li.textContent = temp[i];
-                li.setAttribute("card-text", i.toString());
-                // console.log(li,btn);
-                li.append(btn);
-                $card2.append(li);
-            }
+        let currentQuestion = questions[userQuestionIndex];
+        $card1.text(currentQuestion.question);
+        let temp = Object.keys(currentQuestion.answers);
+        $card2.text("");
+        for (let i = 0; i < temp.length; i++) {
+            let li = document.createElement("li");
+            let btn = document.createElement("button");
+            btn.setAttribute("class", "user-choice")
+            btn.setAttribute("value", currentQuestion.answers[temp[i]])
+            btn.textContent = currentQuestion.answers[temp[i]];
+            li.textContent = temp[i];
+            li.setAttribute("card-text", i.toString());
+            // console.log(li,btn);
+            li.append(btn);
+            $card2.append(li);
+            btn.onclick = nextQuestion;
+        }
     }
     // dynamically checks if the user chose the correct answer and add it to the score value
     // if the user is wrong, call the subtractFive() function
-    function correctAnswer() {
-
-    }
+    // function to go to next question once an answer is clicked
+    console.log(questions[userQuestionIndex].correctAnswer);
+    function nextQuestion() {
+        console.log(this.value);
+        if (this.value !== questions[userQuestionIndex].correctAnswer) {
+            subtractFive;
+            userQuestionIndex++;
+            displayQuestion;
+            if (timer < 0) {
+                timer = 0;
+                quizGrade;
+                return;
+            }
+        }
+        else {
+            score++;
+            userQuestionIndex++;
+            displayQuestion;
+        }
+        if (userQuestionIndex === 10) {
+            quizGrade;
+            return;
+        }
+        else {
+            displayQuestion;
+        }
+    };
     // countdown function for the quiz timer
     // ALTER SO IF A QUESTION IS WRONG, MORE TIME IS SUBTRACTED
     function countDown() {
@@ -128,7 +154,7 @@ $(document).ready(function () {
             $countdown.text(timer);
             if (timer === 0) {
                 clearInterval(timerInterval);
-                quizGrade();
+                quizGrade;
             }
         }, 1000);
     }
