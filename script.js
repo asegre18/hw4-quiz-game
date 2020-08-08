@@ -3,6 +3,7 @@ $(document).ready(function () {
     let score = 0;
     const totalQuestions = 10;
     let timer = 60;
+    let userQuestionIndex = 0;
     const $container = $(".container");
     const $card1 = $(".card1");
     const $card2 = $(".card2");
@@ -87,72 +88,38 @@ $(document).ready(function () {
     // fun animation once the start button is clicked https://api.jqueryui.com/color-animation/
     // start button gets clicked function
     $("#btn-start").click(function () {
-        console.log("clicked");
         // event.preventDefault();
         // buildQuiz();
         displayQuestion();
-        displayChoices();
+        // displayChoices();
         countDown();
-        quizGrade();
+        // quizGrade();
     });
-    // start of quiz builder function
-    // function buildQuiz() { 
-    //     const output = [];
-    //     const quizContainer = $card1;
-    //     //  no forLoop here
-    //     // get 1 question on screen
-    //     questions.forEach(
-    //         (currentQuestion, questionNumber) => {
-    //             const answers = [];
-    //             for (letter in currentQuestion.answer) {
-    //                 answers.push(
-    //                     `<label>
-    //                         <input type="p" name="question${questionNumber}" value="${letter}">
-    //                         ${letter} :
-    //                         ${currentQuestion.answer[letter]}
-    //                 <\label>`
-    //                 );
-    //             }
-    //             output.push(
-    //                 `<div class="button">
-    //                   <div class="question"> ${currentQuestion.question} </div>
-    //                   <div class="answers"> ${answers.join("")} </div>
-    //                 </div>`
-    //             );
-    //         }
-    //     );
-    //     quizContainer.innerHTML = output.join('');
-    // };
-
     // function to display question 1
     // function to move to the next question with an click function 
     function displayQuestion() {
         $card1.text("");
-        for (let i = 0; i < questions.length; i++) {
-            let currentQuestion = questions[i];
-            $card1.text(currentQuestion.value);
-            $card1.append(questions[i]);
-            console.log($(currentQuestion[i]).val());
-        }
-
-    }
-    // plops answers into card2
-    function displayChoices() {
-        $card2.text("");
-        for (let i = 0; i < questions.length; i++) {
-            let currentChoices = questions[i];
-            $card2.text(currentChoices.value);
-            $card2.append(questions[i]);
-            console.log($(currentChoices[i]).val());
-        }
-
+            let currentQuestion = questions[userQuestionIndex];
+            $card1.text(currentQuestion.question);
+            let temp = Object.keys(currentQuestion.answers);
+            $card2.text("");
+            for (let i = 0; i < temp.length; i++) {
+                console.log($card2);
+                let li = document.createElement("li");
+                let btn = document.createElement("button");
+                btn.textContent = currentQuestion.answers[temp[i]];
+                li.textContent = temp[i];
+                li.setAttribute("card-text", i.toString());
+                // console.log(li,btn);
+                li.append(btn);
+                $card2.append(li);
+            }
     }
     // dynamically checks if the user chose the correct answer and add it to the score value
     // if the user is wrong, call the subtractFive() function
     function correctAnswer() {
 
     }
-
     // countdown function for the quiz timer
     // ALTER SO IF A QUESTION IS WRONG, MORE TIME IS SUBTRACTED
     function countDown() {
