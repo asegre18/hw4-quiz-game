@@ -3,7 +3,17 @@ $(document).ready(function () {
     let score = 0;
     const totalQuestions = 10;
     let timer = 60;
-    const quizContainer = $(".card");
+    const $container = $(".container");
+    // trying to add animation over the start button to switch colors every second
+    // setInterval(function() {
+    //     let btnStart = $('.btn-start');
+    //     if (btnStart.css('background-color') == 'red') {
+    //         btnStart.css({'background-color':'green'});
+    //     }
+    //     else {
+    //         btnStart.css({'background-color':'red'});
+    //     }
+    // }, 1000);
 
     // quiz questions
     const questions = [
@@ -121,6 +131,7 @@ $(document).ready(function () {
     // timer functions and code:
     const $countdown = $(".countdown");
     $countdown.text(timer);
+    // fun animation once the start button is clicked https://api.jqueryui.com/color-animation/
     // start button gets clicked function
     $("#btn-start").click(function () {
         console.log("clicked");
@@ -133,6 +144,8 @@ $(document).ready(function () {
     // start of quiz builder function
     function buildQuiz() {
         const output = [];
+        hideRules();
+        const quizContainer = $container;
         questions.forEach(
             (currentQuestion, questionNumber) => {
                 const answers = [];
@@ -150,7 +163,7 @@ $(document).ready(function () {
                       <div class="question"> ${currentQuestion.question} </div>
                       <div class="answers"> ${answers.join("")} </div>
                     </div>`
-                  );
+                );
             }
         );
         quizContainer.innerHTML = output.join('');
@@ -174,6 +187,15 @@ $(document).ready(function () {
     // function to subtract 5 second when a question is wrong
     function subtractFive() {
         timer = timer - 5;
+    }
+
+    function hideRules() {
+        let x = $("#container");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
     }
 
     // create an object with each multiple choice question and answer
