@@ -88,12 +88,8 @@ $(document).ready(function () {
     // fun animation once the start button is clicked https://api.jqueryui.com/color-animation/
     // start button gets clicked function
     $("#btn-start").click(function () {
-        // event.preventDefault();
-        // buildQuiz();
         displayQuestion();
-        // displayChoices();
         countDown();
-        // quizGrade();
     });
     // function to display question 1
     // function to move to the next question with an click function 
@@ -107,11 +103,10 @@ $(document).ready(function () {
             let li = document.createElement("li");
             let btn = document.createElement("button");
             btn.setAttribute("class", "user-choice")
-            btn.setAttribute("value", currentQuestion.answers[temp[i]])
+            btn.setAttribute("value", temp[i])
             btn.textContent = currentQuestion.answers[temp[i]];
             li.textContent = temp[i];
             li.setAttribute("card-text", i.toString());
-            // console.log(li,btn);
             li.append(btn);
             $card2.append(li);
             btn.onclick = nextQuestion;
@@ -120,30 +115,29 @@ $(document).ready(function () {
     // dynamically checks if the user chose the correct answer and add it to the score value
     // if the user is wrong, call the subtractFive() function
     // function to go to next question once an answer is clicked
-    console.log(questions[userQuestionIndex].correctAnswer);
+    // function for user choice and check if it matches the answer from the object
     function nextQuestion() {
-        console.log(this.value);
-        if (this.value !== questions[userQuestionIndex].correctAnswer) {
-            subtractFive;
-            userQuestionIndex++;
-            displayQuestion;
+        let currentQuestion = questions[userQuestionIndex];
+        // console.log(currentQuestion.correctAnswer, this.value);
+        if (this.value !== currentQuestion.correctAnswer) {
+            subtractFive();
             if (timer < 0) {
+                quizGrade();
                 timer = 0;
-                quizGrade;
-                return;
+                $countdown.text("0");
             }
         }
         else {
             score++;
-            userQuestionIndex++;
-            displayQuestion;
+            
+            console.log(this.value);
         }
-        if (userQuestionIndex === 10) {
-            quizGrade;
-            return;
+        userQuestionIndex++;
+        if (userQuestionIndex > 9) {
+            quizGrade();
         }
         else {
-            displayQuestion;
+            displayQuestion();
         }
     };
     // countdown function for the quiz timer
@@ -153,30 +147,27 @@ $(document).ready(function () {
             timer--;
             $countdown.text(timer);
             if (timer === 0) {
-                clearInterval(timerInterval);
-                quizGrade;
+                quizGrade();
+                $countdown.text("0");
             }
         }, 1000);
     }
-
+// alerts the user's grade out of the 10 questions
     function quizGrade() {
         alert("You got " + score + " out of 10!");
+        $countdown.text("0");
+        alert("That's a " + (score/10)*100 + "%!");
+        timer = 0;
     }
     // function to subtract 5 second when a question is wrong
     function subtractFive() {
         timer = timer - 5;
+        $countdown.text(timer);
     }
-
-    // create an object with each multiple choice question and answer
-    // add key "q:" "a1", "a2", "a3", "a4" - answers too
-    // total of 10 questions with 4 possible answers
-
-    // because of jQuery dont forget to include all inside event funciton!!!
-
+    
     // put all code inside of a while loop that only continues as long as timeLeft !==0
     // add function that responds to the clicks of the user and highlights the answer in green and alters the score...
     //      then have the new set of questions pop up
-    // add function for user choice and check if it matches the answer from the object
 
     // add function that converts the score out of 10 to a percent
 });
