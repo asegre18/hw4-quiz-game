@@ -18,7 +18,6 @@ $(document).ready(function () {
     //         btnStart.css({'background-color':'red'});
     //     }
     // }, 1000);
-
     // quiz questions
     const questions = [
         {
@@ -85,7 +84,6 @@ $(document).ready(function () {
     // timer functions and code:
     const $countdown = $(".countdown");
     $countdown.text(timer);
-    // fun animation once the start button is clicked https://api.jqueryui.com/color-animation/
     // start button gets clicked function
     $("#btn-start").click(function () {
         displayQuestion();
@@ -148,7 +146,7 @@ $(document).ready(function () {
             $countdown.text(timer);
             if (timer === 0) {
                 quizGrade();
-                $countdown.text("0");
+                
             }
         }, 1000);
     }
@@ -164,8 +162,6 @@ $(document).ready(function () {
         timer = timer - 5;
         $countdown.text(timer);
     }
-    
-    // put all code inside of a while loop that only continues as long as timeLeft !==0
     // add function that responds to the clicks of the user and highlights the answer in green and alters the score...
     //      then have the new set of questions pop up
 
