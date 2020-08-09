@@ -1,13 +1,10 @@
 $(document).ready(function () {
     // variables add below
     let score = 0;
-    const totalQuestions = 10;
     let timer = 60;
     let userQuestionIndex = 0;
-    const $container = $(".container");
     const $card1 = $(".card1");
     const $card2 = $(".card2");
-    let questionIndex = 0;
     // trying to add animation over the start button to switch colors every second
     // setInterval(function() {
     //     let btnStart = $('.btn-start');
@@ -121,13 +118,10 @@ $(document).ready(function () {
             subtractFive();
             if (timer < 0) {
                 quizGrade();
-                timer = 0;
-                $countdown.text("0");
             }
         }
         else {
             score++;
-            
             console.log(this.value);
         }
         userQuestionIndex++;
@@ -140,13 +134,30 @@ $(document).ready(function () {
     };
     // countdown function for the quiz timer
     // ALTER SO IF A QUESTION IS WRONG, MORE TIME IS SUBTRACTED
+    // function countDown() {
+    //     let timerInterval = 60;
+    //      timer = setInterval(function () {
+    //         timerInterval--;
+    //         $countdown.text(timerInterval);
+    //         if (timer === 0) {
+    //             quizGrade();
+    //             console.log(timer);
+    //             console.log(timerInterval);
+    //             clearInterval(timer);
+                
+    //         }
+    //     }, 1000);
+    // }
     function countDown() {
         let timerInterval = setInterval(function () {
             timer--;
             $countdown.text(timer);
-            if (timer === 0) {
+            if (timer == 0) {
                 quizGrade();
-                
+                clearInterval(timerInterval);
+            }
+            if (userQuestionIndex > 9) {
+                clearInterval(timerInterval);
             }
         }, 1000);
     }
@@ -155,7 +166,6 @@ $(document).ready(function () {
         alert("You got " + score + " out of 10!");
         $countdown.text("0");
         alert("That's a " + (score/10)*100 + "%!");
-        timer = 0;
     }
     // function to subtract 5 second when a question is wrong
     function subtractFive() {
